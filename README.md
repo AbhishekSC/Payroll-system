@@ -134,6 +134,28 @@ EMPLOYEE
 	•	View only their own payroll
 	•	View net salary breakdown for their payroll
 
+API endpoints
+## API Endpoints
+
+### Authentication
+| Method | Endpoint | Access |
+| :--- | :--- | :--- |
+| **POST** | `/auth/login` | Public |
+| **POST** | `/auth/register` | Admin |
+
+### Payroll
+| Method | Endpoint | Access |
+| :--- | :--- | :--- |
+| **POST** | `/payroll` | Admin |
+| **GET** | `/payroll` | Admin |
+| **GET** | `/payroll/:id` | Admin |
+| **PUT** | `/payroll/:id` | Admin |
+| **DELETE** | `/payroll/:id` | Admin |
+| **GET** | `/payroll/me` | Employee |
+| **GET** | `/payroll/:id/net-pay` | Admin |
+| **GET** | `/payroll/:id/anomalies` | Admin |
+
+
 Role-based access is enforced using JWT and authorization middleware.
 
 ### SAMPLE API USAGE
