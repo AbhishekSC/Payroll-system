@@ -64,6 +64,23 @@ Role-based access is enforced using JWT claims and middleware-level authorizatio
 
 ---
 
+🔐 Default Admin Credentials (For Testing)
+
+Note: These credentials are provided only for local testing and evaluation purposes
+
+Admin credential:
+Email: admin@test.com
+Password: 123456
+Role: ADMIN
+
+Use these credentials to:
+	•	Log in as an Admin
+	•	Register new users
+	•	Create, update, and delete payroll records
+	•	Access net salary and anomaly endpoints
+
+
+
 ## Setup Instructions
 
 ### 1. Clone the Repository
