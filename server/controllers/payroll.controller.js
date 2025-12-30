@@ -3,6 +3,7 @@ import { calculateNetSalary } from "../utils/salaryCalculator.js";
 import { detectAnomalies } from "../utils/anomaly.js";
 import mongoose from "mongoose";
 import { StatusCodes, ReasonPhrases } from "http-status-codes";
+import { creditWallet } from "../services/Wallet.service.js";
 
 /**
  * Common helper
@@ -252,5 +253,57 @@ export const getAnomalies = async (req, res, next) => {
     });
   } catch (err) {
     return next(err);
+  }
+};
+
+/**
+
+ * ADMIN — Pay Salary (Payroll → Wallet)
+
+ */
+
+export const paySalary = async (req, res, next) => {
+  try {
+    const payroll = await Payroll.findById(req.params.id);
+
+    if (!payroll) {
+      return res.status(404).json({ message: "Payroll not found" });
+    }
+
+    if (payroll.paid) {
+      return res.status(400).json({
+        message: "Salary already paid for this payroll",
+      });
+    }
+
+    const { net } = calculateNetSalary(payroll);
+
+    if (net <= 0) {
+      return res.status(400).json({
+        message: "Net salary must be greater than zero",
+      });
+    }
+
+    // Credit wallet
+
+    await creditWallet({
+      employee_id: payroll.employee_id,
+      amount: net,
+      reference_id: `PAYROLL_${payroll._id}`,
+      idempotency_key: `PAYROLL_${payroll._id}`,
+    });
+
+    // Mark payroll as paid
+    payroll.paid = true;
+    payroll.paidAt = new Date();
+    await payroll.save();
+
+    res.json({
+      message: "Salary paid successfully",
+      employee_id: payroll.employee_id,
+      amount: net,
+    });
+  } catch (err) {
+    next(err);
   }
 };

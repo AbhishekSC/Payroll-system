@@ -1,13 +1,3 @@
-// import express from "express";
-// import { create, getById } from "../controllers/payroll.controller.js";
-// import roleMiddleware from "../middlewares/role.middleware.js";
-// import authenticateUserenticateUser from "../middlewares/authenticateUser.middleware.js";
-
-// const router = express.Router();
-
-// router.post("/", authenticateUserenticateUser, roleMiddleware("ADMIN"), create);
-// router.get("/:id", authenticateUserenticateUser, roleMiddleware("ADMIN", "EMPLOYEE"), getById);
-
 import express from "express";
 import {
   createPayroll,
@@ -18,6 +8,7 @@ import {
   getMyPayroll,
   getNetPay,
   getAnomalies,
+  paySalary,
 } from "../controllers/payroll.controller.js";
 
 import authenticateUser from "../middlewares/auth.middleware.js";
@@ -43,5 +34,7 @@ router.get(
   roleMiddleware("ADMIN"),
   getAnomalies
 );
+
+router.post("/:id/pay", authenticateUser, roleMiddleware("ADMIN"), paySalary);
 
 export default router;

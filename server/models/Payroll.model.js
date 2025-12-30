@@ -10,6 +10,13 @@ const payrollSchema = new mongoose.Schema(
     deductions: { type: Number, min: 0, default: 0 },
     taxPercent: { type: Number, min: 0, max: 100, default: 10 },
     socialSecurityPercent: { type: Number, min: 0, max: 100, default: 5 },
+    paid: {
+      type: Boolean,
+      default: false,
+    },
+    paidAt: {
+      type: Date,
+    },
   },
   { timestamps: true }
 );
