@@ -1,9 +1,6 @@
 # Payroll & Compensation Platform
 
 ## Overview
-
-This project is a backend payroll and compensation system built as part of a technical assessment.
-
 The goal was to design and implement core payroll functionality while demonstrating secure API design,
 
 financial domain awareness, testing practices, and responsible use of AI-assisted development tools.
